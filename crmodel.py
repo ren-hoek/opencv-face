@@ -59,7 +59,7 @@ def build_svm(x, y, z, k, p):
     output:
         tuple (classifer, test labels)
     """
-    clf = GridSearchCV(SVC(kernel=k), p, fit_params={})
+    clf = GridSearchCV(SVC(kernel=k, probability=True, class_weight='balanced'), p, fit_params={})
     clf = clf.fit(x, y)
     y_pred = clf.predict(z)
     return (clf, y_pred)
@@ -155,12 +155,12 @@ def read_classifier(f):
 
 
 def main():
-    recog = build_model(25, '/home/gavin/Projects/Faces/images', 'lee', 50)
+    recog = build_model(25, '/home/gavin/Projects/Faces/images', 'joe', 10)
     print recog['report']
     print recog['matrix']
-    save_classifier(recog, 'models/lee2.pkl')
+    save_classifier(recog, 'models/joe-other.pkl')
 
-    recog_2 = read_classifier('models/lee2.pkl')
+    recog_2 = read_classifier('models/joe-other.pkl')
     print recog_2['report']
     print recog_2['matrix']
 

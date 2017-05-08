@@ -48,7 +48,7 @@ def run_cam():
 
 def run_classifier():
     """Run the webcam."""
-    clf = md.read_classifier('models/joe-2-jb.pkl')
+    clf = md.read_classifier('models/lee.pkl')
 
     video_capture = cv2.VideoCapture(0)
 
