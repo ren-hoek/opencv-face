@@ -27,7 +27,7 @@ def set_commands(i, f, r):
 
 
 def add_hat(f, c, m, v=False):
-    """Add the wally-mask to hit from the model."""
+    """Add the wally-mask to hits from the model."""
 
     image = fc.read_image(f, v)
 
@@ -54,7 +54,7 @@ def add_hat(f, c, m, v=False):
     xf = 10
 
     for (x, y, w, h) in detected:
-        cv2.rectangle(append_image, (x, y), (x+w, y+h), (0, 255, 0), 2)
+#        cv2.rectangle(append_image, (x, y), (x+w, y+h), (0, 255, 0), 2)
         image = gray[y:(y+h), x:(x+w)]
         r = float(c['pixel']) /image.shape[1]
         dim = (c['pixel'], int(image.shape[0] * r))
@@ -63,8 +63,8 @@ def add_hat(f, c, m, v=False):
         try:
             X_test_pca = c['pca']['fit'].transform(flat)
             found_face = int(c['classifier'].predict(X_test_pca))
-            prob = c['classifier'].predict_proba(X_test_pca)[0][1]
-            print prob
+#            prob = c['classifier'].predict_proba(X_test_pca)[0][1]
+#            print prob
             if c['labels'][found_face] == m:
                 r = float(w) / orig_width
                 dim = (int(w * 1.3), int(orig_height * r))
@@ -92,6 +92,7 @@ def add_hat(f, c, m, v=False):
 
 def run_ip_class(url, c, lab):
     """Run classifier via ip network cam."""
+
     video_capture = cv2.VideoCapture(0)
 
     stream=urllib.urlopen(url)
@@ -135,7 +136,7 @@ def run_class(c, lab):
         ret, frame = video_capture.read()
         # cv2.imshow('Video', frame)
         detected_frame = add_hat(frame, c, lab, True)
-        cv2.imshow('Video', detected_frame)
+        cv2.imshow("Where's Kevin", detected_frame)
 
         listener = cv2.waitKey(1)
 
